@@ -1,0 +1,70 @@
+R do Alecrim-{'R António Maria Cardoso', 'R Ferragial', 'Pc Duque da Terceira', 'R Ataíde', 'R Nova do Carvalho', 'Tv Guilherme Cossoul'}
+R Ferragial-{'R do Alecrim'}
+R Ataíde-{'R do Alecrim'}
+Pc Duque da Terceira-{'Av 24 de Julho', 'R do Alecrim', 'R Bernardino da Costa', 'R Remolares', 'Cais do Sodré'}
+R Corpo Santo-{'R São Paulo', 'Lg Corpo Santo', 'Tv Corpo Santo', 'R Vitor Cordon'}
+Lg Corpo Santo-{'R Arsenal', 'Cc do Ferragial', 'R Corpo Santo', 'R Vitor Cordon', 'R Bernardino da Costa', 'Cais do Sodré'}
+Tv Corpo Santo-{'R São Paulo', 'R Nova do Carvalho', 'R Corpo Santo', 'R Bernardino da Costa', 'Cais do Sodré'}
+R Bernardino da Costa-{'Pc Duque da Terceira', 'Lg Corpo Santo', 'Tv Corpo Santo'}
+Cais do Sodré-{'Tv Corpo Santo', 'Av 24 de Julho', 'Pc Duque da Terceira', 'Lg Corpo Santo', 'R Cintura (Santos)'}
+Lg Conde-Barão-{'R Mastros', 'R Poço dos Negros', 'Bqr do Duro', 'R da Boavista', 'Tv do Cais do Tojo'}
+R da Boavista-{'Pto Galega (Rua da Boavista, 118)', 'Barão', 'R São Paulo', 'R Instituto Industrial', 'Pto Galega', 'Bc Francisco André', 'Lg Conde-Barão', 'Tv Marquês de Sampaio', 'Bc da Boavista', 'R Instituto Industrial - Lg Conde', 'Bqr dos Ferreiros'}
+Bqr do Duro-{'R Dom Luís I', 'R Cais do Tojo', 'Lg Conde-Barão'}
+R Mastros-{'Lg Conde-Barão'}
+Tv do Cais do Tojo-{'R Poço dos Negros', 'R Cais do Tojo', 'Lg Conde-Barão'}
+Tv Marquês de Sampaio-{'R da Boavista', 'R Santa Catarina', 'R Ferreiros a Santa Catarina'}
+R São Paulo-{'Tv Corpo Santo', 'Pc São Paulo', 'R da Boavista', 'R Flores', 'R Moeda', 'R Corpo Santo', 'Tv dos Remolares', 'Bc da Moeda', 'R Vitor Cordon', 'Cc da Bica Grande', 'Tv Carvalho'}
+Bqr dos Ferreiros-{'R da Boavista', 'R Dom Luís I'}
+Pto Galega (Rua da Boavista, 118)-{'R da Boavista'}
+R Instituto Industrial-{'R da Boavista', 'R Dom Luís I', 'Av 24 de Julho'}
+R Instituto Industrial - Lg Conde-{'R da Boavista'}
+Barão-{'R da Boavista'}
+R Cais do Tojo-{'Bqr do Duro', 'Av Dom Carlos I', 'Tv do Cais do Tojo'}
+Av Dom Carlos I-{'R Dom Luís I', 'R Cais do Tojo'}
+R Dom Luís I-{'Av Dom Carlos I', 'R Instituto Industrial', 'Bqr do Duro', 'R da Cintura do Porto de Lisboa', 'Pc Dom Luís I', 'Bqr dos Ferreiros'}
+Tv Santa Catarina-{'R O Século', 'Tv Condessa do Rio', 'R Marechal Saldanha', 'Tv André Valente'}
+R Ferreiros a Santa Catarina-{'R Santa Catarina', 'Tv Condessa do Rio', 'Tv Marquês de Sampaio'}
+Av 24 de Julho-{'Pc Ribeira Nova', 'R Instituto Industrial', 'Pc Duque da Terceira', 'Tv dos Remolares', 'Cais do Sodré', 'Pc Dom Luís I'}
+R Santa Catarina-{'Tv Marquês de Sampaio', 'Tv Condessa do Rio', 'R Ferreiros a Santa Catarina'}
+R Moeda-{'R São Paulo', 'R da Cintura do Porto de Lisboa', 'Pc Dom Luís I'}
+Pc Dom Luís I-{'Av 24 de Julho', 'R Ribeira Nova', 'R Moeda', 'R Dom Luís I', 'R da Cintura do Porto de Lisboa'}
+Tv Carvalho-{'R São Paulo', 'R Ribeira Nova', 'Tv Carvalho', 'Pc São Paulo'}
+R Ribeira Nova-{'Pc Dom Luís I', 'Pc Ribeira Nova', 'R Instituto Dona Amélia', 'Tv de São Paulo', 'R Remolares', 'Tv Carvalho'}
+Pc São Paulo-{'R São Paulo', 'R Nova do Carvalho', 'Tv de São Paulo', 'Tv Ribeira Nova', 'Tv Carvalho'}
+Tv Condessa do Rio-{'R Santa Catarina', 'Tv André Valente', 'Tv Santa Catarina', 'R Ferreiros a Santa Catarina'}
+R Remolares-{'Pc Duque da Terceira', 'R Ribeira Nova', 'Tv dos Remolares', 'Tv Ribeira Nova'}
+R Instituto Dona Amélia-{'R Ribeira Nova'}
+R Flores-{'R São Paulo'}
+Tv dos Remolares-{'R São Paulo', 'R Remolares', 'R Nova do Carvalho', 'Av 24 de Julho'}
+Bc da Moeda-{'R São Paulo'}
+Cc da Bica Grande-{'R São Paulo'}
+R Nova do Carvalho-{'Tv Corpo Santo', 'R do Alecrim', 'Pc São Paulo', 'Tv Ribeira Nova', 'Tv dos Remolares'}
+Tv Ribeira Nova-{'R Remolares', 'R Nova do Carvalho', 'Pc São Paulo'}
+R Cintura (Santos)-{'Cais do Sodré'}
+Pto Galega-{'R da Boavista'}
+Bc da Boavista-{'R da Boavista'}
+Pc Ribeira Nova-{'R Ribeira Nova', 'Av 24 de Julho'}
+R Arsenal-{'Lg Corpo Santo'}
+Cc do Ferragial-{'Lg Corpo Santo'}
+Bc Francisco André-{'R da Boavista'}
+Tv de São Paulo-{'R Ribeira Nova', 'Pc São Paulo'}
+R O Século-{'R Teixeira', 'R Marechal Saldanha', 'Tv André Valente', 'Tv Santa Catarina'}
+R Marcos Portugal-{'R Imprensa Nacional', 'R São Bento', 'R Quintinha'}
+Tv André Valente-{'R O Século', 'Tv Condessa do Rio', 'R Marechal Saldanha', 'Tv Santa Catarina'}
+R Emenda-{'Tv Guilherme Cossoul', 'R Loreto', 'R Salgadeiras', 'R Diário de Notícias'}
+R Salgadeiras-{'Tv Sequeiro', 'R Loreto', 'R Teixeira', 'R Emenda', 'R Diário de Notícias'}
+Tv Guilherme Cossoul-{'R António Maria Cardoso', 'R Emenda', 'R do Alecrim'}
+R São Bento-{'R Poço dos Negros', 'R Quintinha', 'R Correia Garção', 'R Cruz dos Poiais de São Bento', 'R Marcos Portugal', 'R Imprensa Nacional'}
+R Imprensa Nacional-{'R Quintinha', 'R São Bento', 'R Marcos Portugal'}
+R Vitor Cordon-{'R São Paulo', 'R Corpo Santo', 'R António Maria Cardoso', 'Lg Corpo Santo'}
+R Teixeira-{'R O Século', 'R Salgadeiras', 'R Diário de Notícias'}
+R Poço dos Negros-{'Tv do Cais do Tojo', 'R São Bento', 'Lg Conde-Barão'}
+R Correia Garção-{'R Quintinha', 'R Cruz dos Poiais de São Bento', 'R São Bento'}
+R Cruz dos Poiais de São Bento-{'R Correia Garção', 'R São Bento', 'R Quintinha'}
+R da Cintura do Porto de Lisboa-{'R Moeda', 'Pc Dom Luís I', 'R Dom Luís I'}
+R Diário de Notícias-{'R Loreto', 'R Teixeira', 'R Emenda', 'R Salgadeiras'}
+R Marechal Saldanha-{'R O Século', 'Tv Sequeiro', 'Tv André Valente', 'Tv Santa Catarina'}
+R Loreto-{'R Emenda', 'R Salgadeiras', 'Tv Sequeiro', 'R Diário de Notícias'}
+R António Maria Cardoso-{'R Vitor Cordon', 'Tv Guilherme Cossoul', 'R do Alecrim'}
+Tv Sequeiro-{'R Loreto', 'R Marechal Saldanha', 'R Salgadeiras'}
+R Quintinha-{'R São Bento', 'R Correia Garção', 'R Cruz dos Poiais de São Bento', 'R Marcos Portugal', 'R Imprensa Nacional'}

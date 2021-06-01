@@ -1,0 +1,75 @@
+R do Alecrim:{'Pc Duque da Terceira', 'R Nova do Carvalho'}
+Pc Duque da Terceira:{'R do Alecrim', 'Cais do Sodré', 'R Bernardino da Costa', 'R Remolares', 'Av 24 de Julho'}
+R Corpo Santo:{'R São Paulo', 'Lg Corpo Santo', 'Tv Corpo Santo'}
+Lg Corpo Santo:{'Cais do Sodré', 'R Bernardino da Costa', 'R Corpo Santo'}
+Tv Corpo Santo:{'Cais do Sodré', 'R Bernardino da Costa', 'R Nova do Carvalho', 'R Corpo Santo', 'R São Paulo'}
+R Bernardino da Costa:{'Lg Corpo Santo', 'Pc Duque da Terceira', 'Tv Corpo Santo'}
+Cais do Sodré:{'Lg Corpo Santo', 'Pc Duque da Terceira', 'Tv Corpo Santo', 'Av 24 de Julho'}
+Lg Conde-Barão:{'Tv do Cais do Tojo', 'Bqr do Duro', 'R da Boavista'}
+R da Boavista:{'Lg Conde-Barão', 'Bc Francisco André', 'R São Paulo', 'R Instituto Industrial', 'Tv Marquês de Sampaio', 'Pto Galega', 'Bc da Boavista'}
+Bqr do Duro:{'R Dom Luís I', 'R Cais do Tojo', 'Lg Conde-Barão'}
+Tv do Cais do Tojo:{'R Cais do Tojo', 'Lg Conde-Barão'}
+Tv Marquês de Sampaio:{'R da Boavista'}
+R São Paulo:{'Pc São Paulo', 'Tv Corpo Santo', 'R Moeda', 'Tv dos Remolares', 'R da Boavista', 'Tv Carvalho', 'R Corpo Santo', 'Bc da Moeda'}
+R Instituto Industrial:{'Av 24 de Julho', 'R da Boavista', 'R Dom Luís I'}
+R Cais do Tojo:{'Tv do Cais do Tojo', 'Bqr do Duro'}
+R Dom Luís I:{'R Instituto Industrial', 'Pc Dom Luís I', 'Bqr do Duro'}
+Tv Santa Catarina, 4-6:{'R Marechal Saldanha, 26-26/A', 'Tv Condessa do Rio, Fte 3', 'Tv André Valente, jt silo'}
+R Ferreiros a Santa Catarina, 20:{'Tv Marquês de Sampaio', 'Tv Condessa do Rio, Fte 3', 'R Santa Catarina, 19'}
+Av 24 de Julho:{'Pc Duque da Terceira', 'Cais do Sodré', 'Tv dos Remolares', 'R Instituto Industrial', 'Pc Dom Luís I', 'Pc Ribeira Nova'}
+R Santa Catarina, 19:{'Tv Condessa do Rio, Fte 3', 'Tv Marquês de Sampaio', 'R Ferreiros a Santa Catarina, 20'}
+R Moeda:{'R São Paulo', 'Pc Dom Luís I'}
+Pc Dom Luís I:{'Av 24 de Julho', 'R Dom Luís I', 'R Moeda', 'R Ribeira Nova'}
+Tv Carvalho:{'R São Paulo', 'Pc São Paulo', 'Tv Carvalho', 'R Ribeira Nova'}
+R Ribeira Nova:{'R Remolares', 'Tv Carvalho', 'Pc Dom Luís I', 'Pc Ribeira Nova', 'Tv de São Paulo'}
+Pc São Paulo:{'Tv Ribeira Nova', 'R Nova do Carvalho', 'Tv Carvalho', 'R São Paulo', 'Tv de São Paulo'}
+Tv Condessa do Rio, Fte 3:{'Tv Santa Catarina, 4-6', 'R Santa Catarina, 19', 'R Ferreiros a Santa Catarina, 20'}
+R Remolares:{'Tv Ribeira Nova', 'Pc Duque da Terceira', 'Tv dos Remolares', 'R Ribeira Nova'}
+Tv dos Remolares:{'R São Paulo', 'Av 24 de Julho', 'R Remolares', 'R Nova do Carvalho'}
+Bc da Moeda:{'R São Paulo'}
+R Nova do Carvalho:{'R do Alecrim', 'Pc São Paulo', 'Tv Corpo Santo', 'Tv Ribeira Nova', 'Tv dos Remolares'}
+Tv Ribeira Nova:{'R Remolares', 'Pc São Paulo', 'R Nova do Carvalho'}
+Pto Galega:{'R da Boavista'}
+Bc da Boavista:{'R da Boavista'}
+Pc Ribeira Nova:{'Av 24 de Julho', 'R Ribeira Nova'}
+Bc Francisco André:{'R da Boavista'}
+Tv de São Paulo:{'Pc São Paulo', 'R Ribeira Nova'}
+R O Século, 150:{'Tv André Valente, jt silo', 'R O Século, 12', 'R Teixeira, 1'}
+R Marcos Portugal, Muro do Lg Agostinho da Silva:{'R Imprensa Nacional, 46', 'R Quintinha, 70-B', 'R São Bento, 318'}
+Tv André Valente, jt silo:{'Tv Santa Catarina, 4-6', 'R O Século, 12', 'Tv Condessa do Rio, Fte 3'}
+R Remolares, Crzt Tv Remolares:{'R Remolares', 'Tv dos Remolares', 'R Nova do Carvalho'}
+R Emenda, 100:{'R Emenda, 41-43-45-47', 'R Loreto, 57-59', 'R Salgadeiras, SFC Jt 11'}
+R Salgadeiras, SFC CZT  R. da Atalaia:{'R Loreto, 57-59', 'R Emenda, 100', 'R Salgadeiras, SFC Jt 11'}
+Tv Guilherme Cossoul, 10:{'R Emenda, 41-43-45-47', 'Tv Guilherme Cossoul, 11', 'R Emenda, 100'}
+Lg Conde-Barão, 19:{'Bqr do Duro', 'R da Boavista', 'Lg Conde-Barão'}
+R São Bento, 212:{'R Quintinha, 70-B', 'R São Bento, 318', 'R Correia Garção, 3'}
+R Imprensa Nacional, 46:{'R Quintinha, 70-B', 'R São Bento, 318', 'R Marcos Portugal, Muro do Lg Agostinho da Silva'}
+R Vitor Cordon, 43:{'R São Paulo, 14 a 16', 'Lg Corpo Santo', 'R Corpo Santo'}
+R São Paulo, 108:{'R São Paulo', 'Tv Ribeira Nova', 'Pc São Paulo'}
+R São Bento, 318:{'R Imprensa Nacional, 46', 'R São Bento, 212', 'R Quintinha, 70-B'}
+R Teixeira, 1:{'R Diário de Notícias, 40-B', 'R O Século, 150', 'R Diário de Notícias, 40-A'}
+R Salgadeiras, SFC Jt 11:{'R Salgadeiras, SFC CZT  R. da Atalaia', 'R Loreto, 57-59', 'R Emenda, 100'}
+R Poço dos Negros, crzt R São Bento:{'Lg Conde-Barão, 19', 'R São Bento, 15', 'Lg Conde-Barão'}
+R Correia Garção, 3:{'R São Bento, 212', 'R São Bento, 15', 'R Cruz dos Poiais de São Bento, Crt R das Parreiras'}
+R São Paulo, 14 a 16:{'R Ferragial, 33-B', 'Tv Corpo Santo', 'R Nova do Carvalho'}
+Tv Guilherme Cossoul, 11:{'R Emenda, 41-43-45-47', 'R Emenda, 100', 'Tv Guilherme Cossoul, 10'}
+R São Bento, 15:{'R Poço dos Negros, crzt R São Bento', 'R Correia Garção, 3', 'Lg Conde-Barão'}
+R Cruz dos Poiais de São Bento, Crt R das Parreiras:{'R Quintinha, 70-B', 'R São Bento, 212', 'R Correia Garção, 3'}
+R da Cintura do Porto de Lisboa, 3154 Armazém B:{'Pc Dom Luís I', 'R Dom Luís I, 7-9', 'R Dom Luís I'}
+R Instituto Industrial, 7-7D:{'R da Boavista', 'Lg Conde-Barão', 'Bc da Boavista'}
+Tv Carvalho, frt nº 29:{'Tv Carvalho, 27-27/A', 'Bc da Moeda', 'Tv Carvalho'}
+R da Boavista, 88-94:{'Pto Galega', 'Tv Marquês de Sampaio', 'R da Boavista'}
+R Dom Luís I, 34:{'Bqr do Duro', 'R Cais do Tojo', 'R Dom Luís I'}
+R Emenda, 41-43-45-47:{'Tv Guilherme Cossoul, 11', 'R Emenda, 100', 'Tv Guilherme Cossoul, 10'}
+R Diário de Notícias, 40-A:{'R Salgadeiras, SFC CZT  R. da Atalaia', 'R Diário de Notícias, 40-B', 'R Salgadeiras, SFC Jt 11'}
+R do Alecrim, 24:{'R Ferragial, 33-B', 'R do Alecrim', 'R São Paulo'}
+R O Século, 12:{'R Marechal Saldanha, 26-26/A', 'Tv Santa Catarina, 4-6', 'Tv André Valente, jt silo'}
+R Marechal Saldanha, 26-26/A:{'Tv Santa Catarina, 4-6', 'Tv Sequeiro, Jt 8', 'Tv André Valente, jt silo'}
+R Loreto, 57-59:{'R Salgadeiras, SFC CZT  R. da Atalaia', 'R Emenda, 100', 'R Salgadeiras, SFC Jt 11'}
+R Ferragial, 33-B:{'R São Paulo', 'R São Paulo, 14 a 16', 'R do Alecrim, 24'}
+R Dom Luís I, 7-9:{'Pc Dom Luís I', 'R Dom Luís I', 'R da Boavista'}
+Tv Carvalho, 27-27/A:{'Tv Carvalho, frt nº 29', 'Tv Carvalho', 'R Ribeira Nova'}
+R António Maria Cardoso, 31/33/35:{'R do Alecrim', 'Tv Guilherme Cossoul, 11', 'R Vitor Cordon, 43'}
+Tv Sequeiro, Jt 8:{'R Marechal Saldanha, 26-26/A', 'R Loreto, 57-59', 'R Salgadeiras, SFC CZT  R. da Atalaia'}
+R Diário de Notícias, 40-B:{'R Salgadeiras, SFC Jt 11', 'R Salgadeiras, SFC CZT  R. da Atalaia', 'R Diário de Notícias, 40-A'}
+R Quintinha, 70-B:{'R São Bento, 212', 'R São Bento, 318', 'R Marcos Portugal, Muro do Lg Agostinho da Silva'}
