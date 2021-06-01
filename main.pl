@@ -48,6 +48,14 @@ comprimento( [_|L],N ) :-
     N is N1+1.
 
 
+deleteLastElement([],[]).
+deleteLastElement([_], []).
+deleteLastElement([Head, Next|Tail], [Head|NTail]):-
+  deleteLastElement([Next|Tail], NTail).
+
+add_tail([],X,[X]).
+add_tail([H|T],X,[H|L]):-add_tail(T,X,L).
+
 %-------------------------------------------------------------
 
 litrosContentores([],0).
@@ -58,19 +66,41 @@ contentoresRua(ID,L,R):- (solucoes(C,(contentorRua(C,ID),(contentor(C,_,_,T,_,_,
 
 litrosRua(ID,L,R):- contentoresRua(ID,L,C),litrosContentores(C,R).
 
+litrosRuas([],_,0).
+litrosRuas([H|T],L,R):-litrosRuas(T,L,R1),litrosRua(H,L,C), R is R1+C.
+
+contentoresTipos([H],Tipos):-contentor(H,_,_,Tipo,_,_,_,_),pertence(Tipo,Tipos).
+contentoresTipos([H|T],Tipos):- contentor(H,_,_,Tipo,_,_,_,_),pertence(Tipo,Tipos).
+contentoresTipos([H|T],Tipos):- contentoresTipos(T,Tipos).
+
+ruaTipos(ID,Tipos):-(solucoes(C,contentorRua(C,ID),Cont)),contentoresTipos(Cont,Tipos).
+
 deposicao(100).
 garagem(0).
 
-resolve_pp(Nodo,[Nodo|Caminho]) :- profundidadeprimeiro1Recolha(Nodo,[Nodo],Caminho,Capacidade).
+resolve_pp(Nodo,Lixos,[Nodo|Trunc]) :- profundidadeprimeiro1Recolha(Nodo,[Nodo],Caminho,Lixo),toCapacity(Caminho,Trunc).
 
-profundidadeprimeiro1Recolha(Nodo,_,[],0):-deposicao(Nodo).
+resolve_pp2(Nodo,Lixos,[Nodo|Caminho]) :- profundidadeprimeiro1Inicial(Nodo,[Nodo],Caminho,Lixo).
 
-profundidadeprimeiro1Recolha(Nodo,_,_,Capacidade):-adjacente(Nodo,ProxNodo),litrosRua(ProxNodo,[],R),Capacidade+R>15000.
+profundidadeprimeiro1Inicial(Nodo,_,[],Lixos):-ruaTipos(Nodo,Lixos).
 
-profundidadeprimeiro1Recolha(Nodo,Historico,[ProxNodo|Caminho],Capacidade) :- adjacente(Nodo,ProxNodo),
-                                                                              nao(membro(ProxNodo,Historico)),
-                                                                              profundidadeprimeiro1Recolha(ProxNodo,[ProxNodo|Historico],Caminho,C1),
-                                                                              litrosRua(Nodo,[],C), Capacidade is C1+C.
+profundidadeprimeiro1Inicial(Nodo,Historico,[ProxNodo|Caminho],Lixos) :- adjacente(Nodo,ProxNodo),
+                                                                        nao(membro(ProxNodo,Historico)),
+                                                                        profundidadeprimeiro1Inicial(ProxNodo,[ProxNodo|Historico],Caminho,Lixos).
+
+profundidadeprimeiro1Recolha(Nodo,_,[],Lixos):-deposicao(Nodo).
+
+profundidadeprimeiro1Recolha(Nodo,Historico,[ProxNodo|Caminho],Lixos) :- adjacente(Nodo,ProxNodo),
+                                                                        nao(membro(ProxNodo,Historico)),
+                                                                        profundidadeprimeiro1Recolha(ProxNodo,[ProxNodo|Historico],Caminho,Lixos).
+
+toCapacity(X,X):-litrosRuas(X,[],C),C=<15000.
+toCapacity(X,R):-deleteLastElement(X,A),toCapacity(A,R).
+
+
+
+
+
 
 adjacente(A,B) :- arco(A,B,_).
 adjacente(A,B) :- arco(B,A,_).
