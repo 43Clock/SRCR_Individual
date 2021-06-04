@@ -35,7 +35,7 @@ def ruaMaisProxima(street,listOfCloset):
                         res = k
     return res
 
-def distEntreRuas(a,b):
+def distEntreRuas(a,b,fator):
     contA = contentores[a]
     contB = contentores[b]
     min = 9999999999
@@ -44,7 +44,7 @@ def distEntreRuas(a,b):
         for cb in contB:
             if calculaDist(ca[1],ca[2],cb[1],cb[2])<min:
                 min = calculaDist(ca[1],ca[2],cb[1],cb[2])
-    return round(min*100000)
+    return round(min*fator)
 
 
 #Read xlsx
@@ -66,17 +66,50 @@ for linha in dados:
         contentores[street] = set()
     contentores[street].add(contentor)
 
+for k in contentores.keys():
+    adjacencias[k] = set()
+
+for line in dados:
+    street = line[4].split(':',1)
+    if re.match(r".+\(.+\)",street[1])  :
+        match = re.match(r"([a-zA-z0-9ºªáàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÔÕÖÚÇÑ.\-, \\/]+)\(.+\:(.+)-(.+)\)",street[1])
+        first = match.group(1).strip()
+        second = match.group(2).strip()
+        third = match.group(3).strip()
+        if first != second:
+            if first in adjacencias and second in adjacencias: 
+                adjacencias[first].add(second)  
+                adjacencias[second].add(first)
+        if first != third:
+            if first in adjacencias and third in adjacencias: 
+                adjacencias[first].add(third)
+                adjacencias[third].add(first)
+
+
+
+
+
 #Preencher adjacencias com todas as ruas
 for k in contentores.keys():
     adjacencias[k] = set()
 
-for k in contentores.keys():
-    closest = []
-    for i in range(0,3):
-        r = ruaMaisProxima(k,closest)
-        closest.append(r)
-    for item in closest:
-        adjacencias[k].add(item)
+
+for k,v in adjacencias.items():
+    if len(v) == 0:
+        closest = []
+        for i in range(0,2):
+            r = ruaMaisProxima(k,closest)
+            closest.append(r)
+        for item in closest:
+            adjacencias[k].add(item)
+            
+for k,v in adjacencias.items():
+    for k2,v2 in adjacencias.items():
+        if k != k2:
+            if k in v2 and k2 not in v:
+                adjacencias[k].add(k2)
+            if k not in v2 and k2 in v:
+                adjacencias[k2].add(k)
 
 ordemAlf = []
 for k in adjacencias.keys():
@@ -113,7 +146,21 @@ with open("arcos.pl","w+") as f:
     for k in adjacencias_aux.keys():
         for v in adjacencias_aux[k]:
             if len(v)>0:
-                f.write(f"arco({id_rua[k]},{id_rua[v]},{distEntreRuas(k,v)}).\n")
+                f.write(f"arco({id_rua[k]},{id_rua[v]},{distEntreRuas(k,v,100000)}).\n")
+    f.write(f"arco(0,{id_rua['R do Alecrim']},1).\n")
+    f.write(f"arco(70,{id_rua['R Quintinha']},1).\n")
+    f.write("%estimaDeposito -> id,Dist\n")
+
+    f.write(f"estimaDeposito(0,{distEntreRuas('R do Alecrim','R Quintinha',10000)}).\n")
+    for k in id_rua.keys():
+        f.write(f"estimaDeposito({id_rua[k]},{distEntreRuas('R Quintinha',k,10000)}).\n")
+    f.write(f"estimaDeposito(70,{distEntreRuas('R Quintinha','R Quintinha',10000)}).\n")
+
+    f.write("%estimaGaragem -> id,Dist\n")
+    f.write(f"estimaGaragem(0,{distEntreRuas('R do Alecrim','R do Alecrim',10000)}).\n")
+    for k in id_rua.keys():
+        f.write(f"estimaGaragem({id_rua[k]},{distEntreRuas('R do Alecrim',k,10000)}).\n")   
+    f.write(f"estimaGaragem(70,{distEntreRuas('R do Alecrim','R Quintinha',10000)}).\n")          
 
 with open("ruaIdNome.pl","w+") as f:
     f.write("%ruaIdNome -> id, nome\n")

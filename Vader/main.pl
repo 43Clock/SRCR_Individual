@@ -8,9 +8,8 @@
 :- use_module(library(lists)).
 
 :- include('./arcos.pl').
-:- include('./contentores.pl').
-:- include('./contentorRua.pl').
-:- include('./ruas.pl').
+:- include('./pontosRecolha.pl').
+:- include('./ruaIdNome.pl').
 
 %--------------- Predicados --------------------------------
 
@@ -47,98 +46,104 @@ comprimento( [_|L],N ) :-
     comprimento( L,N1 ),
     N is N1+1.
 
-concat([], List, List).
-concat([Head|Tail], List, [Head|Rest]) :-
-    concat(Tail, List, Rest).
+juntaLista([], List, List).
+juntaLista([Head|Tail], List, [Head|Rest]) :-
+    juntaLista(Tail, List, Rest).
+
+sum([],0).
+sum([H|T],R):-sum(T,R1),R is R1+H.
 
 %-------------------------------------------------------------
 
-litrosContentores([],0).
-litrosContentores([H],R):- contentor(H,_,_,_,_,_,_,R).
-litrosContentores([H|T],R):- litrosContentores(T,R1),contentor(H,_,_,_,_,_,_,X), R is R1+X.
+%Nmr total de litros de um certo tipo num ponto de recolha
+capacidadeRuaTipos(ID,[],R):- (solucoes(C,(pontoRecolha(ID,_,C)),Rs)),sum(Rs,R).
+capacidadeRuaTipos(ID,L,R):- (solucoes(C,(pontoRecolha(ID,T,C),pertence(T,L)),Rs)),sum(Rs,R).
 
-contentoresRua(ID,L,R):- (solucoes(C,(contentorRua(C,ID),(contentor(C,_,_,T,_,_,_,_),pertence(T,L);contentor(C,_,_,T,_,_,_,_),comprimento(L,0))),R)).
+%Nmr total de litros por tipos de varios pontos de recolha
+capacidadeRuasTipos([],_,0).
+capacidadeRuasTipos([H|T],L,R):-capacidadeRuasTipos(T,L,R1),capacidadeRuaTipos(H,L,C), R is R1+C.
 
-litrosRua(ID,L,R):- contentoresRua(ID,L,C),litrosContentores(C,R).
+%Verifica se existe algum elemento da primeira lista na segunda
+ocorreTipo(_,[]).
+ocorreTipo([H],Tipos):-pertence(H,Tipos).
+ocorreTipo([H|_],Tipos):-pertence(H,Tipos).
+ocorreTipo([_|T],Tipos):- ocorreTipo(T,Tipos).
 
-litrosRuas([],_,0).
-litrosRuas([H|T],L,R):-litrosRuas(T,L,R1),litrosRua(H,L,C), R is R1+C.
+%Verifica se algum tipo de lixo de uma certa rua esta numa lista de Tipos de lixo
+pontoRecolhaTipos(0,_).
+pontoRecolhaTipos(70,_).
+pontoRecolhaTipos(ID,Tipos):-(solucoes(C,(pontoRecolha(ID,C,_)),Ts)),ocorreTipo(Ts,Tipos).
 
-contentoresTipos(_,[]).
-contentoresTipos([H],Tipos):-contentor(H,_,_,Tipo,_,_,_,_),pertence(Tipo,Tipos).
-contentoresTipos([H|_],Tipos):- contentor(H,_,_,Tipo,_,_,_,_),pertence(Tipo,Tipos).
-contentoresTipos([_|T],Tipos):- contentoresTipos(T,Tipos).
+%Verifica se , de uma lista de rua, alguma tem um certo tipo de lixo 
+pontosDeRecolhaTipo([H|_],Tipos):-pontoRecolhaTipos(H,Tipos).
+pontosDeRecolhaTipo([_|T],Tipos):-pontosDeRecolhaTipo(T,Tipos).
 
-ruaTipos(0,_).
-ruaTipos(100,_).
-ruaTipos(ID,Tipos):-(solucoes(C,contentorRua(C,ID),Cont)),contentoresTipos(Cont,Tipos).
+%Verifica se todos os pontos do caminho tem pelo menos um dos Tipos de lixo
+verificaTipos(_,[]).
+verificaTipos([H],Tipos):-pontoRecolhaTipos(H,Tipos).
+verificaTipos([H|T],Tipos):-pontoRecolhaTipos(H,Tipos),verificaTipos(T,Tipos).
 
-ruasTipos([H|_],Tipos):-ruaTipos(H,Tipos).
-ruasTipos([_|T],Tipos):-ruasTipos(T,Tipos).
+%Verifica se todos os pontos do caminho tem pelo menos um dos Tipos de lixo
+verificaTiposCaminho(_,[]).
+verificaTiposCaminho(C/_/_,Tipos):-verificaTipos(C,Tipos).
 
-checkTipos(_,[]).
-checkTipos([H],Tipos):-ruaTipos(H,Tipos).
-checkTipos([H|T],Tipos):-ruaTipos(H,Tipos),checkTipos(T,Tipos).
-
-checkCaminhos(_,[]).
-checkCaminhos(C/_/_,Tipos):-checkTipos(C,Tipos).
-
+%Filtra uma lista para conter apenas os caminhos com determinados tipos
 filtraLista([],[],_).
-filtraLista([H|T],[H|X],Tipos):-checkCaminhos(H,Tipos),filtraLista(T,X,Tipos).
+filtraLista([H|T],[H|X],Tipos):-verificaTiposCaminho(H,Tipos),filtraLista(T,X,Tipos).
 filtraLista([_|T],X,Tipos):-filtraLista(T,X,Tipos).
 
-adjComTipo([H],Tipos,H):- ruaTipos(H,Tipos).
-adjComTipo([H|_],Tipos,H):- ruaTipos(H,Tipos). 
-adjComTipo([_|T],Tipos,X):- adjComTipo(T,Tipos,X). 
+%De uma lista de pontos adjacentes verifica qual é o que tem um certo tipo de lixo
+ruasAdjComTipo([H],Tipos,H):- pontoRecolhaTipos(H,Tipos).
+ruasAdjComTipo([H|_],Tipos,H):- pontoRecolhaTipos(H,Tipos). 
+ruasAdjComTipo([_|T],Tipos,X):- ruasAdjComTipo(T,Tipos,X). 
 
-deposicao(100).
+deposicao(70).
 garagem(0).
 
 %--------------------------------------------------------------------------------------------------
-resolve_pp(Lixos,Final/Custo/Litros) :- profundidadeprimeiro1Recolha(0,[0],Caminho,Lixos,Custo1),
-                                        profundidadeprimeiro1Regresso(100,[100],CRegresso,Lixos,Custo2),
-                                        concat([0|Caminho],CRegresso,Final),
-                                        litrosRuas(Caminho,Lixos,Litros),
-                                        Custo is Custo1+Custo2,write([0|Caminho]),write('\n'),write(CRegresso).
+resolve_pp(Lixos,Caminho/Custo1) :- profundidadeprimeiro1Recolha(0,[0],Caminho,Lixos,Custo1).
+                                        %profundidadeprimeiro1Regresso(70,[70],CRegresso,Lixos,Custo2),
+                                        %juntaLista([0|Caminho],CRegresso,Final),
+                                        %capacidadeRuasTipos(Caminho,Lixos,Litros),
+                                        %Custo is Custo1+Custo2,write([0|Caminho]),write('\n'),write(CRegresso).
 
 
 profundidadeprimeiro1Recolha(Nodo,_,[],_,0):-deposicao(Nodo).
 
-profundidadeprimeiro1Recolha(Nodo,Historico,[ProxNodo|Caminho],Lixos,Custo) :-(solucoes(ID,adjacenteSimples(Nodo,ID),Adj)),
-                                                                            ((comprimento(Lixos,Comp),Comp>0,ruasTipos(Adj,Lixos),adjComTipo(Adj,Lixos,ProxNodo));
-                                                                            (comprimento(Lixos,A),A =:= 0,adjacenteSimples(Nodo,ProxNodo));!),
+profundidadeprimeiro1Recolha(Nodo,Historico,[ProxNodo|Caminho],Lixos,Custo) :-(solucoes(ID,adjacencia(Nodo,ID),Adj)),
+                                                                            ((comprimento(Lixos,A),A =:= 0,adjacencia(Nodo,ProxNodo));
+                                                                            (comprimento(Lixos,Comp),Comp>0,pontosDeRecolhaTipo(Adj,Lixos),ruasAdjComTipo(Adj,Lixos,ProxNodo));!),
                                                                             nao(membro(ProxNodo,Historico)),
                                                                             profundidadeprimeiro1Recolha(ProxNodo,[ProxNodo|Historico],Caminho,Lixos,C1),
-                                                                            adjacente(Nodo,ProxNodo,C),
+                                                                            adjacenteDistancia(Nodo,ProxNodo,C),
                                                                             Custo is C1+C.
 
 profundidadeprimeiro1Regresso(Nodo,_,[],_,0):-garagem(Nodo).
 
-profundidadeprimeiro1Regresso(Nodo,Historico,[ProxNodo|Caminho],Lixos,Custo) :- adjacenteSimples(Nodo,ProxNodo),
+profundidadeprimeiro1Regresso(Nodo,Historico,[ProxNodo|Caminho],Lixos,Custo) :- adjacencia(Nodo,ProxNodo),
                                                                                 nao(membro(ProxNodo,Historico)),
                                                                                 profundidadeprimeiro1Regresso(ProxNodo,[ProxNodo|Historico],Caminho,Lixos,C1),
-                                                                                adjacente(Nodo,ProxNodo,C),
+                                                                                adjacenteDistancia(Nodo,ProxNodo,C),
                                                                                 Custo is C1+C.
                                                                                 
+adjacencia(A,B) :- arco(A,B,_).
+adjacencia(A,B) :- arco(B,A,_).
 
-adjacenteSimples(A,B) :- arco(A,B,_).
-adjacenteSimples(A,B) :- arco(B,A,_).
-
-adjacente(A,B,C) :- arco(A,B,C).
-adjacente(A,B,C) :- arco(B,A,C).
+adjacenteDistancia(A,B,C) :- arco(A,B,C).
+adjacenteDistancia(A,B,C) :- arco(B,A,C).
 
 %--------------------------------------------------------------------------------------------------
 
 resolve_gulosa(Lixos,CaminhoFinal/CustoTotal/Litros) :-
-    estimaDeposicao(0,Estima),
+    estimaDeposito(0,Estima),
     agulosa_Recolha([[0]/0/Estima],InvCaminho/Custo/_,Lixos),
     inverso(InvCaminho,Caminho),
-    estimaGaragem(100,Estima2),
-    agulosa_Regresso([[100]/0/Estima2],InvCaminho2/Custo2/_),
+    estimaGaragem(70,Estima2),
+    agulosa_Regresso([[70]/0/Estima2],InvCaminho2/Custo2/_),
     inverso(InvCaminho2,Caminho2),
     CustoTotal is Custo+Custo2,
-    concat(Caminho,Caminho2,CaminhoFinal),
-    litrosRuas(Caminho,Lixos,Litros),
+    juntaLista(Caminho,Caminho2,CaminhoFinal),
+    capacidadeRuasTipos(Caminho,Lixos,Litros),
     write(Caminho),write('\n'),write(Caminho2).
 
 
@@ -170,9 +175,9 @@ expande_gulosa_Recolha(Caminho,ExpCaminhos,Lixos):-
 
 
 adjacente_Recolha([Nodo|Caminho]/Custo/_,[ProxNodo,Nodo|Caminho]/NovoCusto/Est):-
-    adjacente(Nodo,ProxNodo,PassoCusto),nao(membro(ProxNodo,Caminho)),
+    adjacenteDistancia(Nodo,ProxNodo,PassoCusto),nao(membro(ProxNodo,Caminho)),
     NovoCusto is Custo + PassoCusto,
-    estimaDeposicao(ProxNodo,Est).
+    estimaDeposito(ProxNodo,Est).
 
 
 agulosa_Regresso(Caminhos,Caminho) :-
@@ -193,21 +198,21 @@ expande_gulosa_Regresso(Caminho,ExpCaminhos):-
     
     
 adjacente_Regresso([Nodo|Caminho]/Custo/_,[ProxNodo,Nodo|Caminho]/NovoCusto/Est):-
-    adjacente(Nodo,ProxNodo,PassoCusto),nao(membro(ProxNodo,Caminho)),
+    adjacenteDistancia(Nodo,ProxNodo,PassoCusto),nao(membro(ProxNodo,Caminho)),
     NovoCusto is Custo + PassoCusto,
     estimaGaragem(ProxNodo,Est).
 
 %--------------------------------------------------------------------------------------------------
 resolve_aestrela(Lixos,CaminhoFinal/CustoTotal/Litros):-
-        estimaDeposicao(0,Estima),
+        estimaDeposito(0,Estima),
         aestrela_Recolha([[0]/0/Estima],InvCaminho/Custo/_,Lixos),
         inverso(InvCaminho,Caminho),
-        estimaGaragem(100,Estima2),
-        aestrela_Regresso([[100]/0/Estima2],InvCaminho2/Custo2/_),
+        estimaGaragem(70,Estima2),
+        aestrela_Regresso([[70]/0/Estima2],InvCaminho2/Custo2/_),
         inverso(InvCaminho2,Caminho2),
         CustoTotal is Custo+Custo2,
-        concat(Caminho,Caminho2,CaminhoFinal),
-        litrosRuas(Caminho,Lixos,Litros),
+        juntaLista(Caminho,Caminho2,CaminhoFinal),
+        capacidadeRuasTipos(Caminho,Lixos,Litros),
         write(Caminho),write('\n'),write(Caminho2).
 
 aestrela_Recolha(Caminhos,Caminho,_):-obtem_melhor(Caminhos,Caminho),

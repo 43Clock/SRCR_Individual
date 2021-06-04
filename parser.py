@@ -147,19 +147,28 @@ for k in adjacencias.keys():
 
  """
 
-#TODO FALTAM DISTANCIAS AQUI
 with open("arcos.pl","w+") as f:
-    f.write("%arco -> id,id\n")
+    f.write("%arco -> id,id,Dist\n")
     for k in adjacencias_aux.keys():
         for v in adjacencias_aux[k]:
             if len(v)>0:
                 f.write(f"arco({id_rua[k]},{id_rua[v]},{distEntreRuas(k,v)}).\n")
-    f.write("arco(0,1,30).\n")
-    f.write("arco(0,2,30).\n")
-    f.write("arco(0,3,30).\n")
-    f.write(f"arco(100,{len(adjacencias)},30).\n")
-    f.write(f"arco(100,{len(adjacencias)-1},30).\n")
-    f.write(f"arco(100,{len(adjacencias)-2},30).\n")
+    f.write("arco(0,1,1).\n")
+    f.write("arco(100,57,1).\n")
+    f.write("%estimaDeposicao -> id,Dist\n")
+
+    f.write(f"estimaDeposicao(0,{distEntreRuas('R do Alecrim','R Quintinha')}).\n")
+    for k in id_rua.keys():
+        f.write(f"estimaDeposicao({id_rua[k]},{distEntreRuas('R Quintinha',k)}).\n")
+    f.write(f"estimaDeposicao(100,{distEntreRuas('R Quintinha','R Quintinha')}).\n")
+
+    f.write("%estimaGaragem -> id,Dist\n")
+    f.write(f"estimaGaragem(0,{distEntreRuas('R do Alecrim','R do Alecrim')}).\n")
+    for k in id_rua.keys():
+        f.write(f"estimaGaragem({id_rua[k]},{distEntreRuas('R do Alecrim',k)}).\n")   
+    f.write(f"estimaGaragem(100,{distEntreRuas('R do Alecrim','R Quintinha')}).\n")
+        
+
 
 with open("ruas.pl","w+") as f:
     f.write("%rua -> id, nome\n")
