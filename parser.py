@@ -154,6 +154,12 @@ with open("arcos.pl","w+") as f:
         for v in adjacencias_aux[k]:
             if len(v)>0:
                 f.write(f"arco({id_rua[k]},{id_rua[v]},{distEntreRuas(k,v)}).\n")
+    f.write("arco(0,1,30).\n")
+    f.write("arco(0,2,30).\n")
+    f.write("arco(0,3,30).\n")
+    f.write(f"arco(100,{len(adjacencias)},30).\n")
+    f.write(f"arco(100,{len(adjacencias)-1},30).\n")
+    f.write(f"arco(100,{len(adjacencias)-2},30).\n")
 
 with open("ruas.pl","w+") as f:
     f.write("%rua -> id, nome\n")
