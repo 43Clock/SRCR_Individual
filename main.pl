@@ -95,28 +95,30 @@ deposicao(100).
 garagem(0).
 
 %--------------------------------------------------------------------------------------------------
-resolve_pp(Lixos,Final/Custo/Litros) :- profundidadeprimeiro1Recolha(0,[0],Caminho,Lixos,Custo1),
-                                        profundidadeprimeiro1Regresso(100,[100],CRegresso,Lixos,Custo2),
-                                        concat([0|Caminho],CRegresso,Final),
-                                        litrosRuas(Caminho,Lixos,Litros),
-                                        Custo is Custo1+Custo2,write([0|Caminho]),write('\n'),write(CRegresso).
+resolve_pp(Lixos,Final/Custo/Litros) :- profundidadeprimeiro_Recolha(0,[0],Caminho,Lixos,Custo1),
+                                    profundidadeprimeiro_Regresso(100,[100],CRegresso,Lixos,Custo2),
+                                    concat([0|Caminho],CRegresso,Final),
+                                    litrosRuas(Caminho,Lixos,Litros),
+                                    Custo is Custo1+Custo2,write([0|Caminho]),write('\n'),write(CRegresso).
 
 
-profundidadeprimeiro1Recolha(Nodo,_,[],_,0):-deposicao(Nodo).
+profundidadeprimeiro_Recolha(Nodo,_,[],_,0):-deposicao(Nodo).
 
-profundidadeprimeiro1Recolha(Nodo,Historico,[ProxNodo|Caminho],Lixos,Custo) :-(solucoes(ID,adjacenteSimples(Nodo,ID),Adj)),
-                                                                            ((comprimento(Lixos,Comp),Comp>0,ruasTipos(Adj,Lixos),adjComTipo(Adj,Lixos,ProxNodo));
-                                                                            (comprimento(Lixos,A),A =:= 0,adjacenteSimples(Nodo,ProxNodo));!),
+profundidadeprimeiro_Recolha(Nodo,Historico,[ProxNodo|Caminho],Lixos,Custo) :- adjacenteSimples(Nodo,ProxNodo),
+                                                                            (solucoes(ID,adjacenteSimples(Nodo,ID),Adj)),
+                                                                            ((comprimento(Lixos,Comp),Comp>0,ruaTipos(ProxNodo,Lixos));
+                                                                            (comprimento(Lixos,A),A =:= 0,adjacenteSimples(Nodo,ProxNodo));
+                                                                            (comprimento(Lixos,Cmp),Cmp>0,nao(ruaTipos(ProxNodo,Lixos)),!,fail)),
                                                                             nao(membro(ProxNodo,Historico)),
-                                                                            profundidadeprimeiro1Recolha(ProxNodo,[ProxNodo|Historico],Caminho,Lixos,C1),
+                                                                            profundidadeprimeiro_Recolha(ProxNodo,[ProxNodo|Historico],Caminho,Lixos,C1),
                                                                             adjacente(Nodo,ProxNodo,C),
                                                                             Custo is C1+C.
 
-profundidadeprimeiro1Regresso(Nodo,_,[],_,0):-garagem(Nodo).
+profundidadeprimeiro_Regresso(Nodo,_,[],_,0):-garagem(Nodo).
 
-profundidadeprimeiro1Regresso(Nodo,Historico,[ProxNodo|Caminho],Lixos,Custo) :- adjacenteSimples(Nodo,ProxNodo),
+profundidadeprimeiro_Regresso(Nodo,Historico,[ProxNodo|Caminho],Lixos,Custo) :- adjacenteSimples(Nodo,ProxNodo),
                                                                                 nao(membro(ProxNodo,Historico)),
-                                                                                profundidadeprimeiro1Regresso(ProxNodo,[ProxNodo|Historico],Caminho,Lixos,C1),
+                                                                                profundidadeprimeiro_Regresso(ProxNodo,[ProxNodo|Historico],Caminho,Lixos,C1),
                                                                                 adjacente(Nodo,ProxNodo,C),
                                                                                 Custo is C1+C.
                                                                                 
@@ -126,6 +128,41 @@ adjacenteSimples(A,B) :- arco(B,A,_).
 
 adjacente(A,B,C) :- arco(A,B,C).
 adjacente(A,B,C) :- arco(B,A,C).
+
+%--------------------------------------------------------------------------------------------------
+resolve_pp_limitada(Lixos,Max,Final/Custo/Litros) :- profundidadeprimeiroLimitada_Recolha(0,[0],Caminho,Lixos,Custo1,Max),
+                                                     profundidadeprimeiroLimitada_Regresso(100,[100],CRegresso,Lixos,Custo2,Max),
+                                                     concat([0|Caminho],CRegresso,Final),
+                                                     litrosRuas(Caminho,Lixos,Litros),
+                                                     Custo is Custo1+Custo2,write([0|Caminho]),write('\n'),write(CRegresso).
+
+
+profundidadeprimeiroLimitada_Recolha(Nodo,_,[],_,0,_):-deposicao(Nodo).
+
+profundidadeprimeiroLimitada_Recolha(Nodo,Historico,[ProxNodo|Caminho],Lixos,Custo,Max) :- 
+                                                                            adjacenteSimples(Nodo,ProxNodo),
+                                                                            comprimento([ProxNodo|Caminho],M),
+                                                                            ((M=<Max);((M>Max),!,fail)),
+                                                                            (solucoes(ID,adjacenteSimples(Nodo,ID),Adj)),
+                                                                            ((comprimento(Lixos,Comp),Comp>0,ruaTipos(ProxNodo,Lixos));
+                                                                            (comprimento(Lixos,A),A =:= 0,adjacenteSimples(Nodo,ProxNodo));
+                                                                            (comprimento(Lixos,Cmp),Cmp>0,nao(ruaTipos(ProxNodo,Lixos)),!,fail)),
+                                                                            nao(membro(ProxNodo,Historico)),
+                                                                            profundidadeprimeiroLimitada_Recolha(ProxNodo,[ProxNodo|Historico],Caminho,Lixos,C1,Max),
+                                                                            adjacente(Nodo,ProxNodo,C),
+                                                                            Custo is C1+C.
+
+profundidadeprimeiroLimitada_Regresso(Nodo,_,[],_,0,_):-garagem(Nodo).
+
+profundidadeprimeiroLimitada_Regresso(Nodo,Historico,[ProxNodo|Caminho],Lixos,Custo,Max) :- 
+                                                                                adjacenteSimples(Nodo,ProxNodo),
+                                                                                comprimento([ProxNodo|Caminho],M),
+                                                                                ((M=<Max);((M>Max),!,fail)),
+                                                                                nao(membro(ProxNodo,Historico)),
+                                                                                profundidadeprimeiroLimitada_Regresso(ProxNodo,[ProxNodo|Historico],Caminho,Lixos,C1,Max),
+                                                                                adjacente(Nodo,ProxNodo,C),
+                                                                                Custo is C1+C.
+
 
 %--------------------------------------------------------------------------------------------------
 
