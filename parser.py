@@ -15,11 +15,11 @@ contentores = {}#Rua -> Contentor(id,x,y,residuo,tipo,capacidade,quantidade)
 def calculaDist(x1,y1,x2,y2):
     return sqrt((x2-x1)**2+(y2-y1)**2)
 
-def closestStreet(street,listOfCloset):
+def closestStreet(street,listOfCloset,restritos):
     min = 999999999
     res = ""
     for k,v in contentores.items():
-        if k != street and k not in listOfCloset:
+        if k != street and k not in listOfCloset and k not in restritos:
             for container in v:
                 for containerStreet in contentores[street]:
                     if calculaDist(container[1],container[2],containerStreet[1],containerStreet[2])<min:
@@ -104,15 +104,22 @@ for item in toRemove:
     del adjacencias[item]
     del contentores[item]
 
+
+#Cria lista dos que n tem adjacentes
+restritos = []
+for k in adjacencias.keys():
+    if len(adjacencias[k]) == 0:
+        restritos.append(k)
+
+
 #Preencher sets vazios do dicionario de adjacencia com as 3 ruas que tem os contentores mais proximos
+
+used = []
 for k,v in adjacencias.items():
     if len(v) == 0:
-        closest = []
-        for i in range(0,3):
-            r = closestStreet(k,closest)
-            closest.append(r)
-        for item in closest:
-            adjacencias[k].add(item)
+        r = closestStreet(k,used,restritos)
+        used.append(r)
+        adjacencias[k].add(r)
 
 #Se ha um arco de a->b tem de haver um de b->a
 for k,v in adjacencias.items():
@@ -161,12 +168,6 @@ with open("arcos.pl","w+") as f:
     for k in id_rua.keys():
         f.write(f"estimaDeposicao({id_rua[k]},{distEntreRuas('R Quintinha',k)}).\n")
     f.write(f"estimaDeposicao(100,{distEntreRuas('R Quintinha','R Quintinha')}).\n")
-
-    f.write("%estimaGaragem -> id,Dist\n")
-    f.write(f"estimaGaragem(0,{distEntreRuas('R do Alecrim','R do Alecrim')}).\n")
-    for k in id_rua.keys():
-        f.write(f"estimaGaragem({id_rua[k]},{distEntreRuas('R do Alecrim',k)}).\n")   
-    f.write(f"estimaGaragem(100,{distEntreRuas('R do Alecrim','R Quintinha')}).\n")
         
 
 
